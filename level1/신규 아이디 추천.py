@@ -2,11 +2,12 @@ import re
 
 #special character = -_.~!@#$%^&*()=+[{]}:?,<>/
 
-# new_id= "...!@BaT#*..y.abcdefghijklm"
+#테스트용 input값들
+new_id= "...!@BaT#*..y.abcdefghijklm"
 # new_id= "z-+.^."
 # new_id= "=.="
 # new_id= "123_.def"
-new_id= "abcdefghijklmn.p"
+# new_id= "abcdefghijklmn.p"
 
 
 # 1단계 new_id의 모든 대문자를 대응되는 소문자로 치환합니다.
@@ -16,7 +17,8 @@ print('1단계',new_id)
 new_id=re.sub(r'[~!@#$%^&*()=+\[{\]}:?,<>/]','',new_id)
 print('2단계',new_id)
 # 3단계 new_id에서 마침표(.)가 2번 이상 연속된 부분을 하나의 마침표(.)로 치환합니다.
-new_id=new_id.replace("..",".")
+new_id= re.sub('\.+', '.',new_id)
+# new_id=new_id.replace("..",".")
 print('3단계',new_id)
 # 4단계 new_id에서 마침표(.)가 처음이나 끝에 위치한다면 제거합니다.
 new_id=new_id.strip(".")
@@ -39,12 +41,14 @@ while len(new_id)<3:
 print('7단계',new_id)
 
 
+# 함수화 시킴
 def solution(new_id):
     new_id = new_id.lower()
 
     new_id = re.sub(r'[~!@#$%^&*()=+\[{\]}:?,<>/]', '', new_id)
 
-    new_id = new_id.replace("..", ".")
+    new_id= re.sub('\.+', '.',new_id)
+    # new_id = new_id.replace("..", ".")
 
     new_id = new_id.strip(".")
 
@@ -60,3 +64,22 @@ def solution(new_id):
 
     answer = new_id
     return answer
+
+
+'''
+정규식으로 완성한 다른 답변 참고
+
+import re
+
+def solution(new_id):
+    st = new_id
+    st = st.lower()
+    st = re.sub('[^a-z0-9\-_.]', '', st)
+    st = re.sub('\.+', '.', st)
+    st = re.sub('^[.]|[.]$', '', st)
+    st = 'a' if len(st) == 0 else st[:15]
+    st = re.sub('^[.]|[.]$', '', st)
+    st = st if len(st) > 2 else st + "".join([st[-1] for i in range(3-len(st))])
+    return st
+
+'''
