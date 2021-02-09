@@ -10,3 +10,10 @@ def solution(a, b):
     return answer
 
 print(solution(a,b))
+
+# sum 함수 이용한 사례
+'''
+def adder(a, b):
+    if a > b: a, b = b, a
+    return sum(range(a,b+1))
+'''
